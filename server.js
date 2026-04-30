@@ -23,7 +23,7 @@ mongoose.connect(DB)
 
 const port = process.env.PORT || 3000;
 // starting the server and listening for requests
-const server = app.listen(port, () => {
+const server = app.listen(port, '0.0.0.0' , () => {
   console.log(`App running on port ${port}...`);
 });
 
