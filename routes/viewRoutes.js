@@ -12,7 +12,7 @@ router.post('/submit-user-data' , authController.protect , viewController.update
 
 router.use(authController.isLoggedIn)
 
-router.get("/" , bookingController.createBookingCheckout , authController.isLoggedIn ,  viewController.getOverview);
+router.get("/" , authController.isLoggedIn ,  viewController.getOverview);
 router.get("/tour/:slug" , viewController.getTour);
 
 
