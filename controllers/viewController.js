@@ -86,3 +86,14 @@ exports.updateUserData = catchAsync( async (req , res , next) => {
         user: updatedUser
     });
 });
+
+
+exports.alerts = (req , res , next) => {
+    const alert = req.query.alert;
+
+    if(alert === 'booking')
+        res.locals.alert = `Your booking was successful! Please check your email for confirmation. If your booking doesn't show up here immediately, Please come back later.`;
+
+    next();
+}
+
