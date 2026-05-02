@@ -1,35 +1,56 @@
 /* eslint-disable */
 
-export const displayMap = locations => {
+export const displayMap = (locations) => {
   if (!locations || locations.length === 0) return;
 
-  const firstLocation = locations[0].coordinates;
-  const firstLatLng = [firstLocation[1], firstLocation[0]]; // Leaflet uses [lat, lng]
-
   const map = L.map('map', {
-    scrollWheelZoom: false
-  }).setView(firstLatLng, 14);
+    scrollWheelZoom: false,
+    zoomControl: false,
+    doubleClickZoom: false,
+    touchZoom: false,
+    boxZoom: false,
+    keyboard: false,
+  });
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+    attribution: '&copy; OpenStreetMap contributors',
   }).addTo(map);
 
   const bounds = [];
+  const markers = [];
 
-  locations.forEach(loc => {
+  const markerIcon = L.icon({
+    iconUrl: '/img/pin.png',
+    iconSize: [32, 40],
+    iconAnchor: [16, 40],
+    popupAnchor: [0, -38],
+  });
+
+  locations.forEach((loc) => {
     const [lng, lat] = loc.coordinates;
     const latLng = [lat, lng];
 
     bounds.push(latLng);
 
-    L.marker(latLng)
+    const marker = L.marker(latLng, { icon: markerIcon })
       .addTo(map)
-      .bindPopup(`Day ${loc.day}: ${loc.description}`)
-      .openPopup();
+      .bindPopup(`Day ${loc.day}: ${loc.description}`, {
+        autoClose: false,
+        closeOnClick: false,
+        closeButton: false,
+        autoPan: false,
+      });
+
+    markers.push(marker);
   });
 
   map.fitBounds(bounds, {
-    padding: [100, 100],
-    maxZoom: 12
+    padding: [120, 120],
+    maxZoom: 10,
   });
+
+  setTimeout(() => {
+    map.invalidateSize();
+    markers.forEach((marker) => marker.openPopup());
+  }, 300);
 };
