@@ -1,4 +1,3 @@
-````md
 # Natours
 
 Natours is a full-stack tour booking application built with Node.js, Express, MongoDB, Mongoose, Pug, and Stripe.
