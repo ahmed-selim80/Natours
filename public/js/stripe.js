@@ -3,7 +3,7 @@ import { showAlert } from './alerts';
 
 /* global Stripe */
 
-const stripe = Stripe('YOUR_STRIPE_PUBLIC_KEY_HERE');
+const stripe = Stripe('pk_test_51TRYsC9idrVHJHhHDfhCb594vZahzKt7a4Gv2Cqsr42YJAUkJ9w34cR6yBwyNXFbSnkELI260hWxwVNKi7m6jKcv00xu3lKI7Z');
 
 export const bookTour = async tourId => {
   try {
