@@ -1,13 +1,13 @@
-const path = require("path");
-const morgan = require("morgan");
+const path = require('path');
+const morgan = require('morgan');
 const express = require('express');
 const compression = require('compression');
-const rateLimit = require("express-rate-limit");
-const helmet = require("helmet");
-const mongoSanitize = require("express-mongo-sanitize");
-const xss = require("xss-clean");
-const hpp = require("hpp");
-const cookieParser = require("cookie-parser");
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const AppError = require(`${__dirname}/Utils/appError`);
@@ -21,24 +21,29 @@ const bookingController = require(`${__dirname}/controllers/bookingController`);
 
 const app = express();
 
-app.enable('trust proxy');
+// Needed because Render/proxies sit in front of your app.
+// Use 1, NOT app.enable('trust proxy'), because express-rate-limit rejects overly permissive trust proxy.
+app.set('trust proxy', 1);
 
-app.set("view engine" , 'pug');
-app.set("views" , path.join(__dirname ,`views`));
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+// Stripe webhook route MUST come before express.json(),
+// because Stripe needs the raw body for signature verification.
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 // Implement CORS
 app.use(cors());
+app.options('*', cors());
 
-// options is an HTTP method
-app.options('*' , cors());
-
-// serving static files
-app.use(express.static( path.join(__dirname ,`public`)));
+// Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Set Security HTTP headers
-// app.js
-// ----- CODE STARTS HERE -----
-
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -65,6 +70,9 @@ app.use(
       imgSrc: [
         "'self'",
         'data:',
+        'https://a.tile.openstreetmap.org',
+        'https://b.tile.openstreetmap.org',
+        'https://c.tile.openstreetmap.org',
         'https://*.tile.openstreetmap.org',
         'https://www.natours.dev'
       ],
@@ -83,27 +91,23 @@ app.use(
   })
 );
 
-
-// ----- CODE ENDS HERE -----
-
 // Only show logging when in development mode
-if(process.env.NODE_ENV === "development"){
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Limit requests from same API
+// Limit requests from same IP
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP, PLease try again in an hour!"
-})
-app.use('/api' , limiter);
+  message: 'Too many requests from this IP, please try again in an hour!'
+});
 
-app.post('/webhook-checkout' , express.raw({type: 'application/json'}) , bookingController.webhookCheckout);
+app.use('/api', limiter);
 
-// body parser , reading data from body into req.body
-app.use(express.json({limit: '10kb'}));
-app.use(express.urlencoded({extended: true , limit: "10kb"}));
+// Body parser: reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection
@@ -113,46 +117,41 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(hpp({
-  whitelist: [
-    'duration',
-    'ratingsAverage',
-    'ratingsQuantity',
-    'maxGroupSize',
-    'price',
-    'difficulty',
-  ]
-}));
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsAverage',
+      'ratingsQuantity',
+      'maxGroupSize',
+      'price',
+      'difficulty'
+    ]
+  })
+);
 
+// Compress text responses
 app.use(compression());
 
 // Test middleware
-app.use((req , res , next) => {
+app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
-})
+});
 
-// Mounting a router (Mounting this route: tourRouter , on this route `/api/v1/tours`)
-app.use(`/` , viewRouter);
-app.use(`/api/v1/tours` , tourRouter);
-app.use(`/api/v1/users` , userRouter);
-app.use(`/api/v1/reviews` , reviewRouter);
-app.use(`/api/v1/bookings` , bookingRouter);
+// Mount routers
+app.use('/', viewRouter);
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
-app.all("*" , (req , res , next)=>{
-  // res.status(404).json({
-  //   status: "fail",
-  // message: `Can't find ${req.originalUrl} on this server!`
-  // })
+// Handle undefined routes
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
-  // const err = new Error(`Can't find ${req.originalUrl} on this server!`);
-  // err.statusCode = 404;
-  // err.status = "fail";
-
-
-  next(new AppError(`Can't find ${req.originalUrl} on this server!` , 404));
-})
-
+// Global error handling middleware
 app.use(globalErrorHandler);
 
 module.exports = app;
