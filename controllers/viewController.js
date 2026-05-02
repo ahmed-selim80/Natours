@@ -54,18 +54,23 @@ exports.getAccount = (req , res) => {
 }
 
 
-exports.getMyTours = catchAsync (async (req , res , next) => {
-    // 1) Find all bookings
-    const bookings = await Booking.find({user: req.user.id});
+exports.getMyTours = catchAsync(async (req, res, next) => {
+  // 1) Find all bookings for current user
+  const bookings = await Booking.find({ user: req.user.id });
 
-    // 2) Find tours with the returned IDs
-    const tourIDs = bookings.map(el => el.tour);
-    const tours = await Tour.find({_id : {$in : tourIDs}});
+  // 2) Extract tour IDs from populated tour documents
+  const tourIDs = bookings.map(el => el.tour.id);
 
-    res.status(200).render('overview' , {
-        title: 'My Tours',
-        tours
-    })
+  // 3) Find tours with those IDs
+  const tours = await Tour.find({
+    _id: { $in: tourIDs }
+  });
+
+  // 4) Render overview with only booked tours
+  res.status(200).render('overview', {
+    title: 'My Tours',
+    tours
+  });
 });
 
 
