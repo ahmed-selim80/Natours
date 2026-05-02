@@ -1,23 +1,26 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
 
+/* global Stripe */
+
+const stripe = Stripe('YOUR_STRIPE_PUBLIC_KEY_HERE');
+
 export const bookTour = async tourId => {
-    try{
-        // creating stripe
-        const stripe = Stripe('pk_test_51TRYsC9idrVHJHhHDfhCb594vZahzKt7a4Gv2Cqsr42YJAUkJ9w34cR6yBwyNXFbSnkELI260hWxwVNKi7m6jKcv00xu3lKI7Z');
-        
-        // 1) Get the checkout session from API
-        const session = await axios(`http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`);
+  try {
+    // 1) Get checkout session from YOUR deployed API using relative URL
+    const session = await axios(`/api/v1/bookings/checkout-session/${tourId}`);
 
-        // 2) Create checkout form + charge credit card
-        await stripe.redirectToCheckout({
-            sessionId: session.data.session.id
-        });
-    }
+    // 2) Redirect to Stripe Checkout
+    await stripe.redirectToCheckout({
+      sessionId: session.data.session.id
+    });
+  } catch (err) {
+    console.log(err);
 
-    catch(err){
-        showAlert('error' , err);
+    if (err.response && err.response.data && err.response.data.message) {
+      showAlert('error', err.response.data.message);
+    } else {
+      showAlert('error', 'Something went wrong while booking the tour.');
     }
+  }
 };
-
-

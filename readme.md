@@ -11,7 +11,12 @@ This project was built while completing Jonas Schmedtmann’s Node.js, Express, 
 
 ## Live Demo
 
-Live project: [Add your deployed app link here]
+Live project: [https://natours-vbze.onrender.com/]
+
+
+## API Documentation
+
+Postman Docs: [https://documenter.getpostman.com/view/48914644/2sBXqKofYC]
 
 Demo login:
 
@@ -192,7 +197,7 @@ POST   /api/v1/users/login
 GET    /api/v1/users/logout
 POST   /api/v1/users/forgotPassword
 PATCH  /api/v1/users/resetPassword/:token
-PATCH  /api/v1/users/updateMyPassword
+PATCH  /api/v1/users/
 ```
 
 ### Users
@@ -292,8 +297,8 @@ STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 Clone the repository:
 
 ```bash
-git clone https://github.com/[your-username]/[your-repo-name].git
-cd [your-repo-name]
+git clone [https://github.com/ahmed-selim80/Natours.git]
+cd [Natours]
 ```
 
 Install dependencies:
@@ -371,4 +376,5 @@ Certificate: [https://ude.my/UC-2aafbdd3-4ae8-4767-9577-a07e48f8b945]
 Ahmed Selim
 
 GitHub: [https://github.com/ahmed-selim80]
+
 LinkedIn: [www.linkedin.com/in/ahmed-selim-noshi80]
