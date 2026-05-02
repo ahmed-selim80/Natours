@@ -18,6 +18,7 @@ Demo login:
 ```txt
 Email: laura@example.com
 Password: test1234
+```
 ````
 
 > Payments are processed in Stripe test mode. Do not use real card details.
@@ -34,99 +35,99 @@ Any CVC
 
 ### Authentication and Authorization
 
-* User signup and login
-* JWT-based authentication
-* Secure HTTP-only cookies
-* Protected routes
-* Role-based authorization
-* Password reset flow using reset tokens
-* Password hashing with bcrypt
-* Password change invalidates old JWTs
+- User signup and login
+- JWT-based authentication
+- Secure HTTP-only cookies
+- Protected routes
+- Role-based authorization
+- Password reset flow using reset tokens
+- Password hashing with bcrypt
+- Password change invalidates old JWTs
 
 ### Tours
 
-* View all tours
-* View individual tour details
-* Tour guides and reviews population
-* Tour locations displayed on a map
-* Advanced API filtering, sorting, field limiting, and pagination
-* Tour statistics and aggregation endpoints
-* Geospatial queries for tours within a distance
+- View all tours
+- View individual tour details
+- Tour guides and reviews population
+- Tour locations displayed on a map
+- Advanced API filtering, sorting, field limiting, and pagination
+- Tour statistics and aggregation endpoints
+- Geospatial queries for tours within a distance
 
 ### Reviews
 
-* Users can review tours
-* Nested routes for tour reviews
-* Review authorization rules
-* Average ratings calculated using Mongoose middleware
+- Users can review tours
+- Nested routes for tour reviews
+- Review authorization rules
+- Average ratings calculated using Mongoose middleware
 
 ### Bookings and Payments
 
-* Stripe Checkout integration
-* Stripe webhook handling for booking creation
-* Booking model connecting users and tours
-* “My bookings” page showing tours booked by the logged-in user
-* Booking API restricted to admins and lead guides
+- Stripe Checkout integration
+- Stripe webhook handling for booking creation
+- Booking model connecting users and tours
+- “My bookings” page showing tours booked by the logged-in user
+- Booking API restricted to admins and lead guides
 
 ### User Account
 
-* Update profile information
-* Upload user photo
-* Image resizing and optimization with Sharp
-* Account page rendered with Pug templates
+- Update profile information
+- Upload user photo
+- Image resizing and optimization with Sharp
+- Account page rendered with Pug templates
 
 ### Security and Production
 
-* Security HTTP headers with Helmet
-* Rate limiting
-* Data sanitization against NoSQL query injection
-* XSS sanitization
-* Parameter pollution prevention
-* CORS configuration
-* Global error handling
-* Operational vs programming error handling
-* Production-ready environment variable setup
-* Response compression
-* Graceful shutdown handling for SIGTERM and unhandled rejections
+- Security HTTP headers with Helmet
+- Rate limiting
+- Data sanitization against NoSQL query injection
+- XSS sanitization
+- Parameter pollution prevention
+- CORS configuration
+- Global error handling
+- Operational vs programming error handling
+- Production-ready environment variable setup
+- Response compression
+- Graceful shutdown handling for SIGTERM and unhandled rejections
 
 ## Tech Stack
 
 ### Backend
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* JWT
-* bcrypt
-* Stripe
-* Nodemailer
-* SendGrid / Mailtrap
-* Multer
-* Sharp
-* Helmet
-* Express Rate Limit
-* Express Mongo Sanitize
-* XSS Clean
-* HPP
-* Compression
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcrypt
+- Stripe
+- Nodemailer
+- SendGrid / Mailtrap
+- Multer
+- Sharp
+- Helmet
+- Express Rate Limit
+- Express Mongo Sanitize
+- XSS Clean
+- HPP
+- Compression
 
 ### Frontend / Views
 
-* Pug templates
-* CSS
-* Vanilla JavaScript
-* Axios
-* Parcel
-* Leaflet
+- Pug templates
+- CSS
+- Vanilla JavaScript
+- Axios
+- Parcel
+- Leaflet
 
 ### Tools
 
-* Postman
-* MongoDB Atlas
-* MongoDB Compass
-* Git and GitHub
-* Deployment platform: [Render / Fly / other platform]
+- Postman
+- MongoDB Atlas
+- MongoDB Compass
+- Git and GitHub
+- Deployment platform: [Render / Fly / other platform]
 
 ## Project Structure
 
@@ -334,31 +335,30 @@ npm start
 
 Before deployment:
 
-* Use relative API URLs in frontend JavaScript.
-* Build the final JavaScript bundle.
-* Set all environment variables on the hosting platform.
-* Make sure the app listens on `process.env.PORT`.
-* Make sure secrets are not committed to GitHub.
-* Configure Stripe webhook endpoint in production.
-* Configure CORS and security settings for the production domain.
+- Use relative API URLs in frontend JavaScript.
+- Build the final JavaScript bundle.
+- Set all environment variables on the hosting platform.
+- Make sure the app listens on `process.env.PORT`.
+- Make sure secrets are not committed to GitHub.
+- Configure Stripe webhook endpoint in production.
+- Configure CORS and security settings for the production domain.
 
 ## What I Learned
 
 This project helped me understand how real backend applications are structured beyond basic CRUD. Key concepts I practiced include:
 
-* MVC architecture
-* Middleware pipelines
-* Authentication and authorization
-* Secure password reset workflows
-* Mongoose data modeling and relationships
-* Query middleware and document middleware
-* Server-side rendering
-* File uploads and image processing
-* Payment integration with Stripe
-* Webhooks
-* Centralized error handling
-* Production deployment and environment configuration
-
+- MVC architecture
+- Middleware pipelines
+- Authentication and authorization
+- Secure password reset workflows
+- Mongoose data modeling and relationships
+- Query middleware and document middleware
+- Server-side rendering
+- File uploads and image processing
+- Payment integration with Stripe
+- Webhooks
+- Centralized error handling
+- Production deployment and environment configuration
 
 ## Certificate
 

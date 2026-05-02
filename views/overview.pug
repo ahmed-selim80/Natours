@@ -2,8 +2,8 @@ extends base
 
 block content
     main.main 
-        each tour in tours
-            .card-container 
+        .card-container 
+            each tour in tours
                 .card
                     .card__header
                         .card__picture
@@ -22,7 +22,7 @@ block content
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-calendar')
-                            span= tour.startDates[0].toLocaleString('en-us' , {month: 'long' , year: 'numeric'})
+                            span= tour.startDates[0].toLocaleString('en-us', { month: 'long', year: 'numeric' })
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-flag')
@@ -40,3 +40,4 @@ block content
                             span.card__footer-value= tour.ratingsAverage
                             span.card__footer-text= ` rating (${tour.ratingsQuantity})`
                         a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) Details
+
