@@ -7,11 +7,11 @@ This project was built while completing Jonas Schmedtmann’s Node.js, Express, 
 
 ## Live Demo
 
-Live project: [https://natours-vbze.onrender.com/]
+Live project: https://natours-vbze.onrender.com/
 
 ## API Documentation
 
-Postman Docs: [https://documenter.getpostman.com/view/48914644/2sBXqKofYC]
+Postman Docs: https://documenter.getpostman.com/view/48914644/2sBXqKofYC
 
 ## Demo Login
 
