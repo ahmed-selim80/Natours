@@ -140,18 +140,17 @@ body {
   font-size: 3.5rem;
 }
 
-/* public/css/style.css */
-/* ----- CODE STARTS HERE ----- */
-
 .heading-primary,
-.heading-tertiary {
+.heading-tertiary,
+.heading-tertirary {
   color: #fff;
   text-transform: uppercase;
   font-weight: 300;
 }
 
 .heading-primary span,
-.heading-tertiary span {
+.heading-tertiary span,
+.heading-tertirary span {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   background-image: -webkit-gradient(
@@ -168,7 +167,6 @@ body {
   );
 }
 
-/* Tour detail page heading */
 .heading-primary {
   font-size: 5rem;
   text-align: center;
@@ -182,8 +180,8 @@ body {
   line-height: 1.55;
 }
 
-/* Tour cards heading */
-.heading-tertiary {
+.heading-tertiary,
+.heading-tertirary {
   font-size: 2.4rem;
   text-align: right;
   position: absolute;
@@ -194,10 +192,12 @@ body {
   line-height: 1.25;
 }
 
-.heading-tertiary span {
+.heading-tertiary span,
+.heading-tertirary span {
   padding: 0.8rem 1.2rem;
   line-height: 1.35;
 }
+
 
 
 .btn,
