@@ -1,7 +1,3 @@
-No — don’t paste that exact version. It has broken markdown at the end and may claim things you didn’t finish.
-
-Paste this cleaner version into `README.md`. Replace only the placeholders inside `[ ... ]`.
-
 ````md
 # Natours
 
